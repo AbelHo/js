@@ -1,11 +1,11 @@
-// if (window.location.hash){
-//   hashparams = new URLSearchParams(window.location.hash.slice(1))
-//   hash_dict = Object.fromEntries(hashparams.entries());
+if (window.location.hash){
+  hashparams = new URLSearchParams(window.location.hash.slice(1))
+  hash_dict = Object.fromEntries(hashparams.entries());
 
-//   xname = hash_dict["xname"]
-//   yname = hash_dict["yname"]
-//   url = hash_dict["url"]
-// }
+  url = hash_dict["url"]
+  xname = hash_dict["xname"]
+  yname = hash_dict["yname"]
+}
 
 
 function getRandomData() {
@@ -22,7 +22,8 @@ async function filterData(data, xname, yname){
   return [data[xname],data[yname]]
 }
 
-async function getData(url='',xname='datetime',yname='yaw'){
+async function getData(url,xname,yname){
+  console.log(xname)
   // url=''
   // xname = 'datetime'
   // yname = 'yaw'
@@ -32,7 +33,7 @@ async function getData(url='',xname='datetime',yname='yaw'){
 
 async function extend(){
   // setInterval(function(){
-    [x,y] = await getData()
+    [x,y] = await getData(url,xname,yname)
     Plotly.extendTraces('chart',{ x:[[x]], y:[[y]]}, [0]);
     // cnt++;
     // maxCnt=500
@@ -48,7 +49,7 @@ async function extend(){
 
 async function extend_x_index(){
   // setInterval(function(){
-    [x,y] = await getData()
+    [x,y] = await getData(url,xname,yname)
     Plotly.extendTraces('chart',{ y:[[y]]}, [0]);
     cnt++;
     maxCnt=50
@@ -64,7 +65,7 @@ async function extend_x_index(){
 
 
 async function init(){
-  [x,y] = await getData()
+  [x,y] = await getData(url,xname,yname)
 
   Plotly.plot('chart',[{
       x: [x,x],
